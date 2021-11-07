@@ -18,10 +18,9 @@ jobs:
       - uses: cachix/install-nix-action@v14.1
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - uses: workflow/nix-shell-action@v1
-        with:
-          packages: trivy
-          script: |
-            make build.docker
-            ./scripts/run-trivy.sh 
+      - name: Run trivy
+        run: |
+          nix-env -i trivy
+          make build.docker
+          ./scripts/run-trivy.sh 
             
